@@ -7,6 +7,9 @@ except:
 
 import maya.OpenMayaUI as omui
 import os
+import importlib
+from . import Util as util
+importlib.reload(util)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 ICON_PATH = os.path.join(BASE_DIR, 'icon')
@@ -69,7 +72,7 @@ class MakeControlCurve(QtWidgets.QDialog):
 		self.jeab_ButLay = QtWidgets.QHBoxLayout()
 		self.main_layout.addLayout(self.jeab_ButLay)
 		self.Jeab_CreateBut = QtWidgets.QPushButton('🌕 Create')
-		#self.Jeab_CreateBut.clicked.connect()
+		self.Jeab_CreateBut.clicked.connect(self.OnClick)
 		self.Jeab_CreateBut.setFont(QtGui.QFont(font_family, 16, QtGui.QFont.Bold))
 		self.Jeab_CreateBut.setStyleSheet(
 			'''
@@ -131,6 +134,9 @@ class MakeControlCurve(QtWidgets.QDialog):
 			item.setIcon(QtGui.QIcon(os.path.join(ICON_PATH, f'{prim}.png')))
 			item.setFont(item_font)
 			self.Jeab_listW.addItem(item)
+
+	def OnClick(self):
+		util.ChangeSelectedShapeCurve(self.Jeab_listW)
 
 def run():
 	global ui
